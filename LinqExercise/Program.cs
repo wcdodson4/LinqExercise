@@ -21,10 +21,8 @@ namespace LinqExercise
              */
 
             //Print the Sum and Average of numbers
-            int sum = numbers.Sum();
-            Console.WriteLine(sum);
-            double avg = numbers.Average();
-            Console.WriteLine(avg);
+            Console.WriteLine(numbers.Sum());
+            Console.WriteLine(numbers.Average());
 
             //Order numbers in ascending order and decsending order. Print each to console.
             IEnumerable<int> ascNumbers = numbers.OrderBy(num => num);
@@ -80,7 +78,7 @@ namespace LinqExercise
 
             //Print all the employees' FullName and Age who are over the age 26 to the console.
             //Order this by Age first and then by FirstName in the same result.
-            var byAge = employees.Where(age => age.Age > 26).OrderBy(age => age.Age).OrderBy(name => name.FirstName);
+            var byAge = employees.Where(age => age.Age > 26).OrderBy(age => age.Age).ThenBy(name => name.FirstName);
             foreach (var n in byAge)
             {
                 Console.WriteLine(n.FullName);
@@ -89,9 +87,17 @@ namespace LinqExercise
 
             //Print the Sum and then the Average of the employees' YearsOfExperience
             //if their YOE is less than or equal to 10 AND Age is greater than 35
+            Console.WriteLine(employees.Where(item => item.YearsOfExperience <= 10 && item.Age > 35).Sum(employee => employee.YearsOfExperience));
+            Console.WriteLine(employees.Where(item => item.YearsOfExperience <= 10 && item.Age > 35).Average(employee => employee.YearsOfExperience));
 
             //Add an employee to the end of the list without using employees.Add()
-
+            employees = employees.Append(new Employee("Wayne", "Gretzky", 55, 2)).ToList();
+            foreach (var i in employees)
+            {
+                Console.WriteLine(i.FullName);
+                Console.WriteLine(i.Age);
+                Console.WriteLine(i.YearsOfExperience);
+            }
             
             Console.WriteLine();
 
